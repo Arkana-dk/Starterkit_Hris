@@ -11,8 +11,11 @@ const hasPhpBinary = () => {
     return !probe.error && probe.status === 0;
 };
 
+const isVercelBuild = process.env.VERCEL === '1';
 const shouldGenerateWayfinderTypes =
-    process.env.WAYFINDER_GENERATE !== 'false' && hasPhpBinary();
+    !isVercelBuild &&
+    process.env.WAYFINDER_GENERATE !== 'false' &&
+    hasPhpBinary();
 
 export default defineConfig({
     plugins: [
